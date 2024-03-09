@@ -13,14 +13,20 @@ public class ClienteController {
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
+
     @PostMapping("/api/create-cliente")
-    public Cliente save(@RequestBody Cliente cliente){
+    public Cliente save(@RequestBody Cliente cliente) {
         return clienteService.save(cliente);
     }
 
-@GetMapping
-    public List<Cliente> findAll(){
+    @GetMapping
+    public List<Cliente> findAll() {
         return clienteService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Cliente findById(@PathVariable Integer id) {
+        return clienteService.findById(id);
     }
 
 }
