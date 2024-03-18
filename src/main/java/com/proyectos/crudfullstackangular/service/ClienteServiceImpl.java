@@ -1,6 +1,7 @@
 package com.proyectos.crudfullstackangular.service;
 
 import com.proyectos.crudfullstackangular.entity.Cliente;
+import com.proyectos.crudfullstackangular.exception.ResourceNotFoundException;
 import com.proyectos.crudfullstackangular.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,24 @@ public class ClienteServiceImpl implements ClienteService{
 
     @Override
     public Cliente findById(Integer id) {
-        return clienteRepository.findById(id).get();
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(
+                ()->{
+                    throw new ResourceNotFoundException("Cliente con id "+id+ "No se Encuentra");
+                }
+        );
+        //return clienteRepository.findById(id).get();
+        return cliente;
     }
 
     @Override
     public void deleteById(Integer id) {
+
         clienteRepository.deleteById(id);
 
     }
 
     @Override
     public Cliente update(Cliente cliente) {
-        return null;
+        return clienteRepository.save(cliente);
     }
 }
